@@ -6,56 +6,51 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface MainApp {
+    }
+    interface StencilTest {
+        "hideDefaultSlot"?: boolean;
+        "hideSuffixSlot"?: boolean;
+        "wrapper"?: 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'pre' | 'strong' | 'em';
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLMainAppElement extends Components.MainApp, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLMainAppElement: {
+        prototype: HTMLMainAppElement;
+        new (): HTMLMainAppElement;
+    };
+    interface HTMLStencilTestElement extends Components.StencilTest, HTMLStencilElement {
+    }
+    var HTMLStencilTestElement: {
+        prototype: HTMLStencilTestElement;
+        new (): HTMLStencilTestElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "main-app": HTMLMainAppElement;
+        "stencil-test": HTMLStencilTestElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface MainApp {
+    }
+    interface StencilTest {
+        "hideDefaultSlot"?: boolean;
+        "hideSuffixSlot"?: boolean;
+        "wrapper"?: 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'pre' | 'strong' | 'em';
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "main-app": MainApp;
+        "stencil-test": StencilTest;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "main-app": LocalJSX.MainApp & JSXBase.HTMLAttributes<HTMLMainAppElement>;
+            "stencil-test": LocalJSX.StencilTest & JSXBase.HTMLAttributes<HTMLStencilTestElement>;
         }
     }
 }

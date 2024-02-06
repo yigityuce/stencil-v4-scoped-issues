@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 48px;
+
+  .example {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      width: 100%;
+      border-bottom: 1px solid #ccc;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+}

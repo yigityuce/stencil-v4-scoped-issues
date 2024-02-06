@@ -2,6 +2,15 @@ import { Config } from '@stencil/core';
 
 export const config: Config = {
   namespace: 'stencil-starter-project-name',
+  autoprefixCss: true,
+  taskQueue: 'congestionAsync',
+  extras: {
+    tagNameTransform: true,
+    experimentalSlotFixes: true,
+    scopedSlotTextContentFix: true,
+    enableImportInjection: true,
+    experimentalImportInjection: true,
+  },
   outputTargets: [
     {
       type: 'dist',
@@ -19,6 +28,6 @@ export const config: Config = {
     },
   ],
   testing: {
-    browserHeadless: "new",
+    browserHeadless: 'new',
   },
 };
