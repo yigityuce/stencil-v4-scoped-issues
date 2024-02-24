@@ -4,10 +4,11 @@ export const config: Config = {
   namespace: 'stencil-starter-project-name',
   autoprefixCss: true,
   taskQueue: 'congestionAsync',
+  sourceMap: true,
   extras: {
     tagNameTransform: true,
     experimentalSlotFixes: true,
-    scopedSlotTextContentFix: true,
+    experimentalScopedSlotChanges: true,
     enableImportInjection: true,
     experimentalImportInjection: true,
   },

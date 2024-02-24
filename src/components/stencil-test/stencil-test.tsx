@@ -30,10 +30,11 @@ export class StencilTest implements ComponentInterface {
         <slot
           name="prefix"
           ref={el => {
-            console.log('prefix slot ref:', el);
+            console.log('prefix slot ref:', el, this);
           }}
         />
         <div class="content-wrapper">
+          <dummy-wrapper>Wrapped Text</dummy-wrapper>
           <TagName>
             <slot name="title" />
           </TagName>

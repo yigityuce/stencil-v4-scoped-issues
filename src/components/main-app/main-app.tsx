@@ -1,5 +1,7 @@
 import { h, Component, ComponentInterface, Host, State } from '@stencil/core';
 
+const DEFAULT_ITEM_COUNT = 4;
+
 @Component({
   tag: 'main-app',
   styleUrl: 'main-app.scss',
@@ -11,20 +13,21 @@ export class MainApp implements ComponentInterface {
   @State() hideSuffixSlot: HTMLStencilTestElement['hideSuffixSlot'] = false;
   @State() hideDefaultSlot: HTMLStencilTestElement['hideDefaultSlot'] = false;
   @State() testItems: HTMLElement[] = [];
+  @State() testItems2: HTMLElement[] = [];
   @State() dynamicTestItems: HTMLElement[] = [];
 
   private textContentExampleRef: HTMLStencilTestElement;
   private innerTextExampleRef: HTMLStencilTestElement;
 
   componentWillLoad(): void | Promise<void> {
-    this.testItems = this.createTestItemsShuffled();
-    this.dynamicTestItems = this.createTestItemsShuffled();
+    this.testItems = this.createTestVNodes();
+    this.testItems2 = this.createTestVNodes();
+    this.dynamicTestItems = this.createTestVNodes();
   }
 
-  private createTestItemsShuffled = (count = 5): HTMLElement[] => {
-    return Array.from(new Array(count))
-      .map((_, i) => <span class="default-slot-item">{`item-${i}`}</span>)
-      .sort(() => Math.random() - 0.5);
+  private createTestVNodes = (count = DEFAULT_ITEM_COUNT, shuffle = false): HTMLElement[] => {
+    const items = Array.from(new Array(count)).map((_, i) => <span class="default-slot-item">{`item-${i}`}</span>);
+    return shuffle ? items.sort(() => Math.random() - 0.5) : items;
   };
 
   render(): HTMLElement {
@@ -66,7 +69,7 @@ export class MainApp implements ComponentInterface {
               <span slot="title">Title</span>
               {this.dynamicTestItems}
             </stencil-test>
-            <button onClick={() => (this.dynamicTestItems = this.createTestItemsShuffled())}>Shuffle Items</button>
+            <button onClick={() => (this.dynamicTestItems = this.createTestVNodes(DEFAULT_ITEM_COUNT, true))}>Shuffle Items</button>
           </div>
         </div>
 
@@ -90,7 +93,7 @@ export class MainApp implements ComponentInterface {
               <span slot="prefix">PRE</span>
               <span slot="suffix">SUF</span>
               <span slot="title">Title</span>
-              {!this.hideDefaultSlot ? this.testItems : null}
+              {this.testItems2}
             </stencil-test>
             <button onClick={() => (this.hideDefaultSlot = !this.hideDefaultSlot)}>Toggle Default Slot(s) Visibility</button>
           </div>
@@ -103,7 +106,10 @@ export class MainApp implements ComponentInterface {
               <span slot="prefix">PRE</span>
               <span slot="suffix">SUF</span>
               <span slot="title">Title</span>
-              <pre>Hello World!</pre>
+              <pre>Line 1</pre>
+              <pre>Line 2</pre>
+              <pre>Line 3</pre>
+              <pre>Line 4</pre>
             </stencil-test>
             <button onClick={() => this.textContentExampleRef && (this.textContentExampleRef.textContent = `${Date.now()}`)}>Update Text Content</button>
           </div>

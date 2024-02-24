@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface DummyWrapper {
+    }
     interface MainApp {
     }
     interface StencilTest {
@@ -15,6 +17,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLDummyWrapperElement extends Components.DummyWrapper, HTMLStencilElement {
+    }
+    var HTMLDummyWrapperElement: {
+        prototype: HTMLDummyWrapperElement;
+        new (): HTMLDummyWrapperElement;
+    };
     interface HTMLMainAppElement extends Components.MainApp, HTMLStencilElement {
     }
     var HTMLMainAppElement: {
@@ -28,11 +36,14 @@ declare global {
         new (): HTMLStencilTestElement;
     };
     interface HTMLElementTagNameMap {
+        "dummy-wrapper": HTMLDummyWrapperElement;
         "main-app": HTMLMainAppElement;
         "stencil-test": HTMLStencilTestElement;
     }
 }
 declare namespace LocalJSX {
+    interface DummyWrapper {
+    }
     interface MainApp {
     }
     interface StencilTest {
@@ -41,6 +52,7 @@ declare namespace LocalJSX {
         "wrapper"?: 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'pre' | 'strong' | 'em';
     }
     interface IntrinsicElements {
+        "dummy-wrapper": DummyWrapper;
         "main-app": MainApp;
         "stencil-test": StencilTest;
     }
@@ -49,6 +61,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "dummy-wrapper": LocalJSX.DummyWrapper & JSXBase.HTMLAttributes<HTMLDummyWrapperElement>;
             "main-app": LocalJSX.MainApp & JSXBase.HTMLAttributes<HTMLMainAppElement>;
             "stencil-test": LocalJSX.StencilTest & JSXBase.HTMLAttributes<HTMLStencilTestElement>;
         }
