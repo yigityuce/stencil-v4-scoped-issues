@@ -38,7 +38,7 @@ export class StencilTest implements ComponentInterface {
           <TagName>
             <slot name="title" />
           </TagName>
-          {!this.hideDefaultSlot ? <slot>Slot fallback</slot> : null}
+          {!this.hideDefaultSlot ? <slot></slot> : null}
         </div>
 
         {!this.hideSuffixSlot ? <slot name="suffix" /> : null}

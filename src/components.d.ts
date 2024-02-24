@@ -10,6 +10,8 @@ export namespace Components {
     }
     interface MainApp {
     }
+    interface StencilNestedTest {
+    }
     interface StencilTest {
         "hideDefaultSlot"?: boolean;
         "hideSuffixSlot"?: boolean;
@@ -29,6 +31,12 @@ declare global {
         prototype: HTMLMainAppElement;
         new (): HTMLMainAppElement;
     };
+    interface HTMLStencilNestedTestElement extends Components.StencilNestedTest, HTMLStencilElement {
+    }
+    var HTMLStencilNestedTestElement: {
+        prototype: HTMLStencilNestedTestElement;
+        new (): HTMLStencilNestedTestElement;
+    };
     interface HTMLStencilTestElement extends Components.StencilTest, HTMLStencilElement {
     }
     var HTMLStencilTestElement: {
@@ -38,6 +46,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "dummy-wrapper": HTMLDummyWrapperElement;
         "main-app": HTMLMainAppElement;
+        "stencil-nested-test": HTMLStencilNestedTestElement;
         "stencil-test": HTMLStencilTestElement;
     }
 }
@@ -45,6 +54,8 @@ declare namespace LocalJSX {
     interface DummyWrapper {
     }
     interface MainApp {
+    }
+    interface StencilNestedTest {
     }
     interface StencilTest {
         "hideDefaultSlot"?: boolean;
@@ -54,6 +65,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "dummy-wrapper": DummyWrapper;
         "main-app": MainApp;
+        "stencil-nested-test": StencilNestedTest;
         "stencil-test": StencilTest;
     }
 }
@@ -63,6 +75,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "dummy-wrapper": LocalJSX.DummyWrapper & JSXBase.HTMLAttributes<HTMLDummyWrapperElement>;
             "main-app": LocalJSX.MainApp & JSXBase.HTMLAttributes<HTMLMainAppElement>;
+            "stencil-nested-test": LocalJSX.StencilNestedTest & JSXBase.HTMLAttributes<HTMLStencilNestedTestElement>;
             "stencil-test": LocalJSX.StencilTest & JSXBase.HTMLAttributes<HTMLStencilTestElement>;
         }
     }

@@ -1,6 +1,11 @@
 import { h, Component, ComponentInterface, Host, State } from '@stencil/core';
 
 const DEFAULT_ITEM_COUNT = 4;
+const getRandomInt = (min: number, max: number): number => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 @Component({
   tag: 'main-app',
@@ -16,6 +21,7 @@ export class MainApp implements ComponentInterface {
   @State() testItems2: HTMLElement[] = [];
   @State() dynamicTestItems: HTMLElement[] = [];
 
+  private nestedTestExampleRef: HTMLStencilNestedTestElement;
   private textContentExampleRef: HTMLStencilTestElement;
   private innerTextExampleRef: HTMLStencilTestElement;
 
@@ -27,6 +33,16 @@ export class MainApp implements ComponentInterface {
 
   private createTestVNodes = (count = DEFAULT_ITEM_COUNT, shuffle = false): HTMLElement[] => {
     const items = Array.from(new Array(count)).map((_, i) => <span class="default-slot-item">{`item-${i}`}</span>);
+    return shuffle ? items.sort(() => Math.random() - 0.5) : items;
+  };
+
+  private createTestElements = (count = DEFAULT_ITEM_COUNT, shuffle = false): HTMLElement[] => {
+    const items = Array.from(new Array(count)).map((_, i) => {
+      const element = document.createElement('span');
+      element.className = 'default-slot-item';
+      element.textContent = `item-${i}`;
+      return element;
+    });
     return shuffle ? items.sort(() => Math.random() - 0.5) : items;
   };
 
@@ -70,6 +86,31 @@ export class MainApp implements ComponentInterface {
               {this.dynamicTestItems}
             </stencil-test>
             <button onClick={() => (this.dynamicTestItems = this.createTestVNodes(DEFAULT_ITEM_COUNT, true))}>Shuffle Items</button>
+          </div>
+        </div>
+
+        <div class="example">
+          <h2 class="title">Nested Relocated & Dynamic Sibling Children Example</h2>
+          <div class="content">
+            <stencil-nested-test ref={el => (this.nestedTestExampleRef = el)}>
+              <strong slot="prefix">PRE</strong>
+              <span slot="suffix">SUF</span>
+              <span slot="title">Title</span>
+              {this.dynamicTestItems}
+            </stencil-nested-test>
+            <button
+              onClick={() => {
+                const items = Array.from(this.nestedTestExampleRef?.querySelectorAll('.default-slot-item') || []);
+                for (let i = 0; i < items.length; i++) {
+                  items[i].remove();
+                }
+                for (const item of this.createTestElements(getRandomInt(1, 20))) {
+                  this.nestedTestExampleRef?.appendChild(item);
+                }
+              }}
+            >
+              Randomize Item Count
+            </button>
           </div>
         </div>
 
